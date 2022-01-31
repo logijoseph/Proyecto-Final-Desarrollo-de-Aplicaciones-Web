@@ -1,0 +1,133 @@
+#finanzas{
+/*Para que esté en el mero centro*/
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#pestañas{
+    display: flex;
+}
+
+table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+table thead tr{
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left; 
+}
+
+table th, table td{
+    padding: 12px 15px; 
+}
+
+table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+#ingresos, #egresos{
+    margin-right: 25px;
+    margin-left: 25px;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    border-style: solid;
+    padding: 10px 10px 10px 10px;
+    border-width: 1px;
+    border-color: #dddddd;
+    background-color: #f3f3f3;
+    color: black;
+}
+
+#ingresos{
+    color: white;
+    background-color: #009879;
+}
+
+#Ingresar{
+    background-color: #009879;
+    color: white;
+    border-color: #dddddd;
+    padding: 15px 15px 15px 15px;
+    font-size: 0.9em;
+    font-family: sans-serif;
+}
+
+#divButton{
+    display: flex;
+    justify-content: center;
+}
+
+#balance, #numBalance{
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#balance{
+    color: #009879;
+}
+
+.reflejoDatos{
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#balanceGrafico{
+    display: flex;
+    justify-content: space-around;
+}
+
+#numIngreso{
+    color: #009879;
+    font-weight: bold;
+}
+
+#resumen{
+    margin-bottom: 30px;
+}
+
+body{
+    background-color: #FBFBF0;
+}
+
+#navegacion{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #333;
+}
+
+.botonNav{
+    padding: 10px 20px 10px 20px;
+    border-right-style: solid;
+    border-right-color: white;
+    border-right-width: 2px;
+}
+
+#botonHome{
+    background-color: #009879;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+    font-family: sans-serif;
+}
+
+
