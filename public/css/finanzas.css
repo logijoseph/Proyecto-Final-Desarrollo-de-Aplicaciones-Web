@@ -1,10 +1,4 @@
-#finanzas{
-/*Para que esté en el mero centro*/
-    position: fixed; 
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+
 
 #pestañas{
     display: flex;
@@ -15,7 +9,7 @@ table{
     margin: 25px 0;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
+    min-width: 100%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -97,6 +91,11 @@ table tbody tr:last-of-type {
     font-weight: bold;
 }
 
+#numEgreso{
+    color: #8d8c8c;
+    font-weight: bold;
+}
+
 #resumen{
     margin-bottom: 30px;
 }
@@ -128,6 +127,92 @@ a{
     color: white;
     text-decoration: none;
     font-family: sans-serif;
+}
+
+.chartBox{
+    width: 100%; /*Si no especificamos el ancho se va al infinito*/
+    padding-top: 7%; /*Para qué se vea bien*/
+}
+
+#datosGraficos{ /*En media query cambiar esto*/
+    width: 80%;
+}
+
+#datosNumericos{
+    width: 80%;
+    margin-bottom: 50px;
+}
+
+
+@media (max-width: 767px){
+    #finanzas{
+        display: flex;
+        flex-direction: column;
+        padding-left: 15%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+    #finanzas{
+        position: fixed; 
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        width: 80%;
+    }
+
+    .chartBox{
+        width: auto; /*Si no especificamos el ancho se va al infinito*/
+        padding-top: 35%; /*Para qué se vea bien*/
+    }
+    
+    #datosGraficos{ /*En media query cambiar esto*/
+        width: 300px;
+    }
+    
+    #datosNumericos{
+        width: 300px;
+        margin-bottom: 50px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait){
+    #finanzas{
+        display: flex;
+        flex-direction: column;
+        padding-left: 15%;
+    }
+}
+
+@media (min-width: 1025px){
+    #finanzas{
+        position: fixed; 
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        width: 80%;
+    }
+    
+
+    .chartBox{
+        width: auto; /*Si no especificamos el ancho se va al infinito*/
+        padding-top: 7%; /*Para qué se vea bien*/
+    }
+    
+    #datosGraficos{ /*En media query cambiar esto*/
+        width: 500px;
+    }
+    
+    #datosNumericos{
+        width: 500px;
+        margin-bottom: 50px;
+    }
 }
 
 
