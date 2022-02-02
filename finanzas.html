@@ -5,65 +5,117 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/finanzas.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <header>
+    <!--<header>
         <nav>
             <ul id="navegacion">
                 <li class="botonNav" id="botonHome"><a href="/header">Home</a></li>
                 <li class="botonNav"><a href="/diario">Todo List</a></li>
             </ul>
         </nav>
-    </header>
+    </header>-->
     <div id="finanzas">
-        <div id="resumen">
-            <div id="divbalance">
-                <h2 id="balance" >Balance:</h3>
-                <h1 id="numBalance">$65,750</h2>
+        <div id="datosNumericos">
+            <div id="resumen">
+                <div id="divbalance">
+                    <h2 id="balance" >Balance:</h3>
+                    <h1 id="numBalance">$65,750</h2>
+                </div>
+                <div id="balanceGrafico">
+                    <div class="reflejoDatos">
+                        <p>Ingresos:</p>
+                        <p id="numIngreso">$<span id="ingresosTotales">65,750</span></p> <!--Hago esto para poder obtener solamente el número-->
+                    </div>
+                    <div class="reflejoDatos">
+                        <p>Egresos:</p>
+                        <p id="numEgreso">$<span id="egresosTotales">27,000</span></p>
+                    </div>
+                </div>
             </div>
-            <div id="balanceGrafico">
-                <div class="reflejoDatos">
-                    <p>Ingresos:</p>
-                    <p id="numIngreso">$65,000</p>
+            <div id="datos">
+                <div id="pestañas">
+                    <div id="ingresos">Ingresos</div>
+                    <div id="egresos">Egresos</div>
                 </div>
-                <div class="reflejoDatos">
-                    <p>Egresos:</p>
-                    <p>$0</p>
-                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pago de Nómina</td>
+                            <td>$30,000</td>
+                        </tr>
+                        <tr>
+                            <td>Producto entregado</td>
+                            <td>$750</td>
+                        </tr>
+                        <tr>
+                            <td>Pago de nómina</td>
+                            <td>$30,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="divButton">
+                <button id="Ingresar">Ingresar nuevo</button>
             </div>
         </div>
-        <div id="datos">
-            <div id="pestañas">
-                <div id="ingresos">Ingresos</div>
-                <div id="egresos">Egresos</div>
+
+        <div id="datosGraficos">
+            <div class="chartBox">
+                <canvas id="myChart"></canvas>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Descripción</th>
-                        <th>Cantidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Pago de Nómina</td>
-                        <td>$30,000</td>
-                    </tr>
-                    <tr>
-                        <td>Producto entregado</td>
-                        <td>$750</td>
-                    </tr>
-                    <tr>
-                        <td>Pago de nómina</td>
-                        <td>$30,000</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="divButton">
-            <button id="Ingresar">Ingresar nuevo</button>
         </div>
     </div>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+//Setup block
+
+/*Esta parte es mía, termina en el siguiente //*/
+let ingresos = parseInt($("#ingresosTotales").text().replace(/,/g, "")) //De esta forma borro la coma del número
+let egresos = parseInt($("#egresosTotales").text().replace(/,/g, "")) //con el parseInt lo convierto a número
+
+
+//Aquí termina
+const data = {
+    labels: ['Ingresos', 'Egresos'],
+        datasets: [{
+            label: '',
+            data: [ingresos, egresos],
+            backgroundColor: [
+                '#009879',
+                '#dddddd'
+            ],
+            borderColor: [
+                '#009879',
+                '#dddddd'
+            ],
+            borderWidth: 1
+        }]
+};
+
+//config block
+const  config ={
+    type: 'pie',
+    data,
+    options: {
+    }
+};
+//render block
+const myChart = new Chart(
+    document.getElementById('myChart'), 
+    config
+);
+
+</script>
+
 </html>
