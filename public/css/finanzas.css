@@ -143,6 +143,15 @@ a{
     margin-bottom: 50px;
 }
 
+#divTable{
+    height: 300px;
+    overflow: scroll;
+}
+
+td{
+    max-width: 110px;
+}
+
 
 @media (max-width: 767px){
     #finanzas{
