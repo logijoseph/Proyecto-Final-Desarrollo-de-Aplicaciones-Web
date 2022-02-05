@@ -35,19 +35,20 @@
 </header>
 <body>
    
+ 
   <div class="vh-100 gradient-custom-2">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-md-12 col-xl-10">
-  
+
           <div class="card mask-custom">
             <div class="card-body p-4 text-white">
-  
+
               <div class="text-center pt-3 pb-2">
-                <img src="/img/meta.png" height="100px" width="200px"  alt="Check" width="60">
+                <img src="/img/meta.png" height="100px" width="200px" alt="Check" width="60">
                 <h2 class="my-4">Metas Mensuales</h2>
               </div>
-  
+
               <table class="table text-white mb-0">
                 <thead>
                   <tr>
@@ -57,53 +58,60 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="fw-normal">
-                    <td class="align-middle">
-                      <span >Llamar a Pedro</span >
-                    </td>
-                    <td class="align-middle">
-                      <h6 class="mb-0"><span class="badge bg-danger">Alta</span></h6>
-                    </td>
-                    <td class="align-middle">
-                      <a href="#!" data-mdb-toggle="tooltip" title="Done"><i class="fas fa-check fa-lg text-success me-3"></i></a>
-                      <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i class="fas fa-trash-alt fa-lg text-warning"></i></a>
-                    </td>
-                  </tr>
-                  <tr class="fw-normal">
-                    <td class="align-middle">Hacer pagos a María</td>
-                    <td class="align-middle">
-                      <h6 class="mb-0"><span class="badge bg-success">Baja</span></h6>
-                    </td>
-                    <td class="align-middle">
-                      <a href="#!" data-mdb-toggle="tooltip" title="Done"><i class="fas fa-check fa-lg text-success me-3"></i></a>
-                      <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i class="fas fa-trash-alt fa-lg text-warning"></i></a>
-                    </td>
-                  </tr>
-                  <tr class="fw-normal">
-                    <td class="align-middle">Pagar renta</td>
-                    <td class="align-middle">
-                      <h6 class="mb-0"><span class="badge bg-warning">Media</span></h6>
-                    </td>
-                    <td class="align-middle">
-                      <a href="#!" data-mdb-toggle="tooltip" title="Done"><i class="fas fa-check fa-lg text-success me-3"></i></a>
-                      <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i class="fas fa-trash-alt fa-lg text-warning"></i></a>
-                    </td>
-                  </tr>
+                  <% for (let i=0; i<tareas.length;i++) { %>
+                    <tr class="fw-normal">
+                      <td class="align-middle">
+                        <span>
+                          <%=tareas[i].tarea%>
+                        </span>
+                      </td>
+                      <% if(tareas[i].prioridad==="Alta" ){ %>
+                        <td class="align-middle">
+                          <h6 class="mb-0"><span class="badge bg-danger">
+                              <%=tareas[i].prioridad%>
+                            </span></h6>
+                        </td>
+                        <% } else if(tareas[i].prioridad==="Media" ) { %>
+                          <td class="align-middle">
+                            <h6 class="mb-0"><span class="badge bg-warning">
+                                <%=tareas[i].prioridad%>
+                              </span></h6>
+                          </td>
+                          <% } else if(tareas[i].prioridad==="Baja" ) { %>
+                            <td class="align-middle">
+                              <h6 class="mb-0"><span class="badge bg-success">
+                                  <%=tareas[i].prioridad%>
+                                </span></h6>
+                            </td>
+                            <% } else{ %>
+                              <td class="align-middle">
+                                <h6 class="mb-0"><span class="badge bg-danger">
+                                    <%=tareas[i].prioridad%>
+                                  </span></h6>
+                              </td>
+                              <% } %>
+                                <td class="align-middle">
+                                  <a href="/editmensual/<%= tareas[i]._id %>" data-mdb-toggle="tooltip" title="Done" class="btn btn-info ">Editar </a>
+                                  <a href="/deletemensual/<%= tareas[i]._id %>" data-mdb-toggle="tooltip" title="Remove"
+                                    class="btn btn-danger ">Borrar</a>
+                                </td>
+                    </tr>
+                    <% } %>
                 </tbody>
               </table>
-  
-  
+
+
             </div>
           </div>
-  
+
         </div>
         <div>
-          <a name="" id="" class="btn btn-primary btn-lg" href="#" role="button">Añadir Tarea</a>
-        </div></div>
-      
+          <a class="btn btn-primary btn-lg" href="/addmensual" role="button">Añadir Tarea</a>
+        </div>
+      </div>
+
     </div>
   </div>
-
 
 </body>
 
