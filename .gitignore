@@ -25,6 +25,10 @@ coverage
 # nyc test coverage
 .nyc_output
 
+# dotenv environment variables file
+.env
+.env.test
+
 # Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
@@ -68,9 +72,6 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
