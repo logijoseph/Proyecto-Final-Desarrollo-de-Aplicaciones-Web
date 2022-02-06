@@ -1,0 +1,39 @@
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/todolist.css">
+</head>
+<main role="main" class="container">
+  <div class="row">
+    <div class="col-md-8 blog-main">
+      <form action="/addDiario" method="POST">
+        <div class="form-group">
+          Tarea
+          <input type="text" class="form-control" name="tarea" placeholder="Tarea">
+        </div>
+        <div class="form-group">
+          Prioridad
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="prioridad" id="exampleRadios1" value="Alta" checked>
+          <label class="form-check-label" for="exampleRadios1">
+            Alta
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="prioridad" id="exampleRadios2" value="Media">
+          <label class="form-check-label" for="exampleRadios2">
+            Media
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="prioridad" id="exampleRadios3" value="Baja">
+          <label class="form-check-label" for="exampleRadios2">
+            Baja
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Ingresar</button>
+      </form>
+    </div>
+  </div>
+</main>
