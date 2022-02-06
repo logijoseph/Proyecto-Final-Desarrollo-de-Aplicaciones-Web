@@ -1,0 +1,23 @@
+<header>
+    <div class="topnav" id="topNavBar">
+        <a href="" class="active">Smart To-Do List</a>
+        <a href="/diario">To-Do</a>
+        <a href="/finanzas">Finanzas</a>
+        <a href="">Logout</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+</header>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+    function myFunction() {
+        var x = document.getElementById("topNavBar");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+    }
+</script>
