@@ -15,9 +15,11 @@ function verifyToken(req,res,next){
             }
             else{
                 //El user.id lo creamos aquí para mandarlo de req a la siguiente parte
-                req.userId = data.id
+                req.userId = datos.id
                 next() //Para continuar con el proceso
             }
         })
     }
 }
+
+module.exports = verifyToken

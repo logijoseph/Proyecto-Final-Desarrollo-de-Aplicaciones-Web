@@ -7,6 +7,7 @@ const TareaSchema = Schema({
     status: {
         type: Boolean ,
         default: false
-    }
+    },
+    userId: String
 })
 module.exports = mongoose.model('tareasanual',TareaSchema)
