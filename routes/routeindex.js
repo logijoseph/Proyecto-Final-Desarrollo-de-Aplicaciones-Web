@@ -4,12 +4,44 @@ const TareasDiarias = require('../model/tareadiaria');
 const TareasSemanales = require('../model/tareasemanal');
 const TareasMensuales = require('../model/tareamensual');
 const TareasAnuales = require('../model/tareaanual');
-//Aquí poner las bases de datos
+const User = require('../model/user')
+let verify = require('../middleware/verifyAcces')
+let bcrypt = require("bcrypt")
+let jwt = require("jsonwebtoken")
+let flash = require("connect-flash")
 
-router.use(express.static('public'))
-
-router.get("/", async (req,res)=>{
+router.get("/",async (req,res)=>{
+    //console.log(req.userId)
     res.render("index")
+})
+
+router.get("/login", async(req,res)=>{
+  res.render("login")
+})
+
+/*router.post("/login", async(req,res)=>{
+
+})*/
+
+router.post("/register", async(req,res)=>{
+  let user = new User(req.body)
+
+  let exists = await User.findOne({email: user.email})
+
+  console.log(exists)
+  if(exists){
+    res.redirect("/register")
+  }
+  else{
+    user.psw = bcrypt.hashSync(user.psw, 12) //Ahora cifraremos la contraseña
+    await user.save()
+    //console.log(user)
+    res.redirect("/login")
+  }
+})
+
+router.get("/register", async(req,res)=>{
+  res.render("register")
 })
 
 router.get("/diario", async (req,res)=>{
