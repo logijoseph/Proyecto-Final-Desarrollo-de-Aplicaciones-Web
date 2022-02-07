@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,9 +10,10 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <title>Document</title>
 </head>
+
 <body>
     <%- include ("./templates/_navbar.ejs") %>
-    <!--<header>
+        <!--<header>
         <nav>
             <ul id="navegacion">
                 <li class="botonNav" id="botonHome"><a href="/header">Home</a></li>
@@ -19,113 +21,103 @@
             </ul>
         </nav>
     </header>-->
-    <div id="finanzas">
-        <div id="datosNumericos">
-            <div id="resumen">
-                <div id="divbalance">
-                    <h2 id="balance" >Balance:</h3>
-                    <h1 id="numBalance">$65,750</h2>
-                </div>
-                <div id="balanceGrafico">
-                    <div class="reflejoDatos">
-                        <p>Ingresos:</p>
-                        <p id="numIngreso">$<span id="ingresosTotales">65,750</span></p> <!--Hago esto para poder obtener solamente el número-->
+        <div id="finanzas">
+            <div id="datosNumericos">
+                <div id="resumen">
+                    <% 
+                        let egresosTotales = 0;
+                        let ingresosTotales = 0;
+                                for(let i=flujos.length-1; i >= 0; i--){
+                                    if(flujos[i].tipoFlujo == "EGRESO"){
+                                        egresosTotales += flujos[i].cantidad;
+                                    } else {
+                                        ingresosTotales += flujos[i].cantidad;
+                                    }
+                                }
+                             %>
+                    <div id="divbalance">
+                        <h2 id="balance">Balance:</h3>
+                            <h1 id="numBalance" <%= (ingresosTotales - egresosTotales < 0? 'class=textoEgreso' :'') %>>$<%= ingresosTotales - egresosTotales %>
+                        </h2>
                     </div>
-                    <div class="reflejoDatos">
-                        <p>Egresos:</p>
-                        <p id="numEgreso">$<span id="egresosTotales">27,000</span></p>
+                    <div id="balanceGrafico">
+                        <div class="reflejoDatos">
+                            <p>Ingresos:</p>
+                            <p id="numIngreso">$<span id="ingresosTotales"><%= ingresosTotales %></span></p>
+                            <!--Hago esto para poder obtener solamente el número-->
+                        </div>
+                        <div class="reflejoDatos">
+                            <p>Egresos:</p>
+                            <p id="numEgreso">$<span id="egresosTotales"><%= egresosTotales %></span></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="datos">
-                <div id="pestañas">
-                    <div id="ingresos">Ingresos</div>
-                    <div id="egresos">Egresos</div>
+                <div id="datos">
+                    <!--
+                    <div id="pestañas">
+                        <div id="ingresos">Ingresos</div>
+                        <div id="egresos">Egresos</div>
+                    </div>-->
+                    <div id="divTable">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Cantidad</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(let i=flujos.length-1; i >= 0; i--){ %>
+                                    <tr>
+                                        <td><%= flujos[i].descripcion %></td>
+                                        <td <%= (flujos[i].tipoFlujo=="EGRESO"? 'class=textoEgreso' :'') %>><%= (flujos[i].tipoFlujo=="EGRESO"? '-' :'') %>$<%= flujos[i].cantidad %></td>
+                                        <td><%= flujos[i].fecha?.toLocaleString() %></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div id="divTable">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Descripción</th>
-                                <th>Cantidad</th>
-                                <th>Fecha</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Pago de Nómina</td>
-                                <td>$30,000</td>
-                            </tr>
-                            <tr>
-                                <td>Producto entregado</td>
-                                <td>$750</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Pago de nómina</td>
-                                <td>$30,000</td>
-                            </tr>
-                            <tr>
-                                <td>Pago de nómina</td>
-                                <td>$30,000</td>
-                            </tr>
-                            <tr>
-                                <td>Pago de nómina</td>
-                                <td>$30,000</td>
-                            </tr>
-                            <tr>
-                                <td>Pago de nómina</td>
-                                <td>$30,000</td>
-                            </tr>
-                            <tr>
-                                <td>Pago de nómina</td>
-                                <td>$30,000</td>
-                            </tr>
-                            <tr>
-                                <td>Pago de nómina</td>
-                                <td>$30,000</td>
-                            </tr>
-                            <tr>
-                                <td>Pago de nómina</td>
-                                <td>$30,000</td>
-                            </tr>
-                            <tr>
-                                <td>Pago de nómina</td>
-                                <td>$30,000</td>
-                            </tr>
-                            <tr>
-                                <td>Pago de nómina</td>
-                                <td>$30,000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <form action="/addFinanzas" method="POST" class="NewInput">
+                    <input type="text" class="descripcion" name="descripcion" placeholder="Descripción">
+                    <input type="number" class="cantidad" name="cantidad" id="currency-field" value="" data-type="currency"
+                        placeholder="$100">
+                    
+                    <div class="tipoRadio">
+                        <div>
+                            <input type="radio" id="ingreso" name="tipoFlujo" value="INGRESO">
+                            <label for="ingreso">Ingreso</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="egreso" name="tipoFlujo" value="EGRESO" checked>
+                            <label for="egreso">Egreso</label>
+                        </div>
+                    </div>
+                    <button class="submitButton" type="submit" id="Ingresar">Agregar</button>
+                </form>
             </div>
-            <div id="divButton">
-                <button id="Ingresar">Ingresar nuevo</button>
-            </div>
-        </div>
 
-        <div id="datosGraficos">
-            <div class="chartBox">
-                <canvas id="myChart"></canvas>
+            <div id="datosGraficos">
+                <div class="chartBox">
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
         </div>
-    </div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-//Setup block
+    //Setup block
 
-/*Esta parte es mía, termina en el siguiente //*/
-let ingresos = parseInt($("#ingresosTotales").text().replace(/,/g, "")) //De esta forma borro la coma del número
-let egresos = parseInt($("#egresosTotales").text().replace(/,/g, "")) //con el parseInt lo convierto a número
+    /*Esta parte es mía, termina en el siguiente //*/
+    let ingresos = parseInt($("#ingresosTotales").text().replace(/,/g, "")) //De esta forma borro la coma del número
+    let egresos = parseInt($("#egresosTotales").text().replace(/,/g, "")) //con el parseInt lo convierto a número
 
 
-//Aquí termina
-const data = {
-    labels: ['Ingresos', 'Egresos'],
+    //Aquí termina
+    const data = {
+        labels: ['Ingresos', 'Egresos'],
         datasets: [{
             label: '',
             data: [ingresos, egresos],
@@ -139,20 +131,20 @@ const data = {
             ],
             borderWidth: 1
         }]
-};
+    };
 
-//config block
-const  config ={
-    type: 'pie',
-    data,
-    options: {
-    }
-};
-//render block
-const myChart = new Chart(
-    document.getElementById('myChart'), 
-    config
-);
+    //config block
+    const config = {
+        type: 'pie',
+        data,
+        options: {
+        }
+    };
+    //render block
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
 
 </script>
 
