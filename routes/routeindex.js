@@ -18,8 +18,8 @@ router.get("/", verify, async (req, res) => {
   res.render("diario", { tareas })
 })
 
-router.get("/login", async (req, res) => {
-  res.render('index', { messages: req.flash('info') })
+router.get("/login", async(req,res)=>{
+  res.render('index', {messages: req.flash('info')})
 })
 
 
@@ -208,36 +208,37 @@ router.post('/editmensual/:id', verify, async (req, res) => {
 })
 //Anual
 
-router.get("/addanual", verify, async (req, res) => {
-  res.render("addanual")
+
+router.get("/addanual", verify, async (req,res)=>{
+    res.render("addanual")
 })
-router.post('/addanual', verify, async (req, res) => {
-  let post = new TareasAnuales(req.body)
-  post.userId = req.userId //Le agrego el usuario que publicó el post
-  await post.save()
-  res.redirect("/anual");
+router.post('/addanual', verify, async (req,res) =>{
+    let post = new TareasAnuales(req.body)
+    post.userId = req.userId //Le agrego el usuario que publicó el post
+    await post.save()
+    res.redirect("/anual");
 });
-router.get('/deleteanual/:id', verify, async (req, res) => {
+router.get('/deleteanual/:id', verify, async (req,res) =>{
 
-  let id = req.params.id
-  await TareasAnuales.remove({ _id: id })
-  res.redirect('/anual')
+    let id = req.params.id
+    await TareasAnuales.remove({_id:id})
+    res.redirect('/anual')
 })
-router.get('/editanual/:id', verify, async (req, res) => {
+router.get('/editanual/:id', verify,   async(req,res) =>{
 
-  let id = req.params.id
-  let task = await TareasAnuales.findById(id)
-  res.render('editanual', { task })
-
+    let id = req.params.id
+    let task  = await TareasAnuales.findById(id)
+    res.render('editanual',{task})
+  
 })
-router.post('/editanual/:id', verify, async (req, res) => {
-  await TareasAnuales.updateOne({ _id: req.params.id }, req.body)
-  res.redirect('/anual')
+router.post('/editanual/:id', verify,  async(req,res) =>{
+    await TareasAnuales.updateOne({_id:req.params.id},req.body)
+    res.redirect('/anual')
+})
+ 
+router.get("/logoff", verify, async(req,res)=>{
+    res.clearCookie("token") //Para eliminar el token
+    res.redirect("/")
 })
 
-router.get("/logoff", verify, async (req, res) => {
-  res.clearCookie("token") //Para eliminar el token
-  res.redirect("/")
-})
-
-module.exports = router;
+module.exports = router
