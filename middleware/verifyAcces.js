@@ -4,7 +4,7 @@ function verifyToken(req,res,next){
     let token = req.cookies.token || ''
 
     if(!token){
-        return res.redirect('/login')
+        return res.redirect('/login') //A la ruta de /login
     }
     else{
         //Si existe el token va a revisar si este tovadía no ha expirado, o si es válido

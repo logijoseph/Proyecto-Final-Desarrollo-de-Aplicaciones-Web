@@ -3,16 +3,26 @@
 
 <head>
     <title>Smart To-Do List</title>
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+    <script src="https://code.jquery.com/jquery.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 
 <body>
-    <%- include ("./templates/_navbar") %>
-        <form class="loginForm" action="/login" method="post">
+    <%- include ("./templates/_navbar2") %>
+        <form class="loginForm" action="/login" method="POST">
             <div class="container">
-                <p class="logoText">Smart To-Do List</p>
+                <p class="logoText">Smart To-Do List Login</p>
+                <% if (messages.length > 0) { %>
+        
+                    <p class="alert alert-warning" > <%= messages %>  </p>
+                    <script> $('.alert-warning').delay(5000).fadeOut('slow');       </script>
+                    <% }  %> 
                 <label for="uname"><b>Username</b></label>
                 <input type="text" placeholder="Enter Email" name="email" required>
 
