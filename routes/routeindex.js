@@ -12,14 +12,15 @@ let flash = require("connect-flash")
 const IngresoEgreso = require('../model/ingresoegreso');
 
 
-router.get("/",verify,async (req,res)=>{
-    //console.log(req.userId)
-    let tareas = await TareasDiarias.find({userId:req.userId})
-    res.render("diario", {tareas})
+router.get("/", verify, async (req, res) => {
+  //console.log(req.userId)
+  let tareas = await TareasDiarias.find({ userId: req.userId })
+  res.render("diario", { tareas })
 })
 
-router.get("/login", async(req,res)=>{
-  res.render('index', {messages: req.flash('info')})
+router.get("/login", async (req, res) => {
+  res.render('index', { messages: req.flash('info') })
+})
 
 
 router.post("/login", async (req, res) => {
@@ -29,7 +30,7 @@ router.post("/login", async (req, res) => {
   let user = await User.findOne({ email: email }) //Va a buscar si existe el usuario, si existe lo va a guardar, si no, guardará nulo
   //console.log(user)
 
-  if(!user){
+  if (!user) {
     req.flash('info', 'El usuario o la contraseña son incorrectos')
     res.redirect('/login')
   }
@@ -45,7 +46,7 @@ router.post("/login", async (req, res) => {
       res.redirect('/')
     }
 
-    else{
+    else {
       req.flash('info', 'El usuario o la contraseña son incorrectos')
       res.redirect('/login')
     }
@@ -59,7 +60,7 @@ router.post("/register", async (req, res) => {
 
   //console.log(exists)
 
-  if(exists){
+  if (exists) {
     req.flash('info', 'El usuario ya existe')
 
     res.redirect("/register")
@@ -73,22 +74,22 @@ router.post("/register", async (req, res) => {
 })
 
 
-router.get("/register", async(req,res)=>{
-  res.render('register', {messages: req.flash('info')})
+router.get("/register", async (req, res) => {
+  res.render('register', { messages: req.flash('info') })
 
 })
 
 /* FINANZAS */
-router.get("/finanzas", verify, async (req, res) => {  
-  let flujos = await IngresoEgreso.find({userId: req.userId});
+router.get("/finanzas", verify, async (req, res) => {
+  let flujos = await IngresoEgreso.find({ userId: req.userId });
 
-  res.render("finanzas", {flujos});
+  res.render("finanzas", { flujos });
 })
 
 router.post('/addFinanzas', verify, async (req, res) => {
   console.log("Add Finanzas");
 
-  if(req.body.cantidad == '') return;
+  if (req.body.cantidad == '') return;
 
   let ingresoEgreso = new IngresoEgreso(req.body);
 
@@ -122,31 +123,31 @@ router.get("/anual", verify, async (req, res) => {
 
 //Diario
 
-router.get("/addDiario", verify, async (req,res)=>{
-    res.render("addDiario")
+router.get("/addDiario", verify, async (req, res) => {
+  res.render("addDiario")
 })
-router.post('/addDiario', verify, async (req,res) =>{
-    console.log("Porqueeeeeeeeeeeee")
-    let post = new TareasDiarias(req.body)
-    post.userId = req.userId //Le agrego el usuario que publicó el post
-    await post.save()
-    res.redirect("/diario");
-  });
-  router.get('/deletediario/:id',  verify, async (req,res) =>{
-    let id = req.params.id
-    await TareasDiarias.remove({_id:id})
-    res.redirect('/diario')
-  })
-  router.get('/editdiario/:id',  verify, async(req,res) =>{
-    let id = req.params.id
-    let task  = await TareasDiarias.findById(id)
-    res.render('editDiario',{task})
-  
-  })
-  router.post('/editdiario/:id',  verify, async(req,res) =>{
-    await TareasDiarias.updateOne({_id:req.params.id},req.body)
-    res.redirect('/diario')
-      })
+router.post('/addDiario', verify, async (req, res) => {
+  console.log("Porqueeeeeeeeeeeee")
+  let post = new TareasDiarias(req.body)
+  post.userId = req.userId //Le agrego el usuario que publicó el post
+  await post.save()
+  res.redirect("/diario");
+});
+router.get('/deletediario/:id', verify, async (req, res) => {
+  let id = req.params.id
+  await TareasDiarias.remove({ _id: id })
+  res.redirect('/diario')
+})
+router.get('/editdiario/:id', verify, async (req, res) => {
+  let id = req.params.id
+  let task = await TareasDiarias.findById(id)
+  res.render('editDiario', { task })
+
+})
+router.post('/editdiario/:id', verify, async (req, res) => {
+  await TareasDiarias.updateOne({ _id: req.params.id }, req.body)
+  res.redirect('/diario')
+})
 
 //Semanal
 router.get("/addsemanal", verify, async (req, res) => {
@@ -207,36 +208,36 @@ router.post('/editmensual/:id', verify, async (req, res) => {
 })
 //Anual
 
-router.get("/addanual", verify, async (req,res)=>{
-    res.render("addanual")
+router.get("/addanual", verify, async (req, res) => {
+  res.render("addanual")
 })
-router.post('/addanual', verify, async (req,res) =>{
-    let post = new TareasAnuales(req.body)
-    post.userId = req.userId //Le agrego el usuario que publicó el post
-    await post.save()
-    res.redirect("/anual");
-  });
-  router.get('/deleteanual/:id', verify, async (req,res) =>{
+router.post('/addanual', verify, async (req, res) => {
+  let post = new TareasAnuales(req.body)
+  post.userId = req.userId //Le agrego el usuario que publicó el post
+  await post.save()
+  res.redirect("/anual");
+});
+router.get('/deleteanual/:id', verify, async (req, res) => {
 
-    let id = req.params.id
-    await TareasAnuales.remove({_id:id})
-    res.redirect('/anual')
-  })
-  router.get('/editanual/:id', verify,   async(req,res) =>{
+  let id = req.params.id
+  await TareasAnuales.remove({ _id: id })
+  res.redirect('/anual')
+})
+router.get('/editanual/:id', verify, async (req, res) => {
 
-    let id = req.params.id
-    let task  = await TareasAnuales.findById(id)
-    res.render('editanual',{task})
-  
-  })
-  router.post('/editanual/:id', verify,  async(req,res) =>{
-    await TareasAnuales.updateOne({_id:req.params.id},req.body)
-    res.redirect('/anual')
-      })
+  let id = req.params.id
+  let task = await TareasAnuales.findById(id)
+  res.render('editanual', { task })
 
-  router.get("/logoff", verify, async(req,res)=>{
-    res.clearCookie("token") //Para eliminar el token
-    res.redirect("/")
-  })
+})
+router.post('/editanual/:id', verify, async (req, res) => {
+  await TareasAnuales.updateOne({ _id: req.params.id }, req.body)
+  res.redirect('/anual')
+})
+
+router.get("/logoff", verify, async (req, res) => {
+  res.clearCookie("token") //Para eliminar el token
+  res.redirect("/")
+})
 
 module.exports = router;
