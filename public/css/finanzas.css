@@ -1,10 +1,41 @@
+.textoEgreso{
+    color:red;
+}
 
+.NewInput {
+    margin-top: 20px;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
 
-#pestañas{
+.descripcion {
+    flex-grow: 2;
+}
+
+.cantidad {
+    flex-grow: 1;
+}
+
+.tipoRadio {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.submitButton {
+    flex-grow: 1;
+}
+
+#pestañas {
     display: flex;
 }
 
-table{
+table {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
@@ -13,14 +44,14 @@ table{
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-table thead tr{
+table thead tr {
     background-color: #009879;
     color: #ffffff;
-    text-align: left; 
+    text-align: left;
 }
 
-table th, table td{
-    padding: 12px 15px; 
+table th, table td {
+    padding: 12px 15px;
 }
 
 table tbody tr {
@@ -35,7 +66,7 @@ table tbody tr:last-of-type {
     border-bottom: 2px solid #009879;
 }
 
-#ingresos, #egresos{
+#ingresos, #egresos {
     margin-right: 25px;
     margin-left: 25px;
     font-size: 0.9em;
@@ -48,12 +79,12 @@ table tbody tr:last-of-type {
     color: black;
 }
 
-#ingresos{
+#ingresos {
     color: white;
     background-color: #009879;
 }
 
-#Ingresar{
+#Ingresar {
     background-color: #009879;
     color: white;
     border-color: #dddddd;
@@ -62,49 +93,49 @@ table tbody tr:last-of-type {
     font-family: sans-serif;
 }
 
-#divButton{
+#divButton {
     display: flex;
     justify-content: center;
 }
 
-#balance, #numBalance{
+#balance, #numBalance {
     text-align: center;
     font-family: sans-serif;
 }
 
-#balance{
+#balance {
     color: #009879;
 }
 
-.reflejoDatos{
+.reflejoDatos {
     text-align: center;
     font-family: sans-serif;
 }
 
-#balanceGrafico{
+#balanceGrafico {
     display: flex;
     justify-content: space-around;
 }
 
-#numIngreso{
+#numIngreso {
     color: #009879;
     font-weight: bold;
 }
 
-#numEgreso{
+#numEgreso {
     color: #8d8c8c;
     font-weight: bold;
 }
 
-#resumen{
+#resumen {
     margin-bottom: 30px;
 }
 
-body{
+body {
     background-color: #FBFBF0;
 }
 
-#navegacion{
+#navegacion {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -112,58 +143,61 @@ body{
     background-color: #333;
 }
 
-.botonNav{
+.botonNav {
     padding: 10px 20px 10px 20px;
     border-right-style: solid;
     border-right-color: white;
     border-right-width: 2px;
 }
 
-#botonHome{
+#botonHome {
     background-color: #009879;
 }
 
-a{
+a {
     color: white;
     text-decoration: none;
     font-family: sans-serif;
 }
 
-.chartBox{
-    width: 100%; /*Si no especificamos el ancho se va al infinito*/
-    padding-top: 7%; /*Para qué se vea bien*/
+.chartBox {
+    width: 100%;
+    /*Si no especificamos el ancho se va al infinito*/
+    padding-top: 7%;
+    /*Para qué se vea bien*/
 }
 
-#datosGraficos{ /*En media query cambiar esto*/
+#datosGraficos {
+    /*En media query cambiar esto*/
     width: 80%;
 }
 
-#datosNumericos{
+#datosNumericos {
     width: 80%;
     margin-bottom: 50px;
 }
 
-#divTable{
+#divTable {
     height: 300px;
     overflow: scroll;
 }
 
-td{
+td {
     max-width: 110px;
 }
 
 
-@media (max-width: 767px){
-    #finanzas{
+@media (max-width: 767px) {
+    #finanzas {
         display: flex;
         flex-direction: column;
         padding-left: 15%;
     }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
-    #finanzas{
-        position: fixed; 
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    #finanzas {
+        position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -173,32 +207,35 @@ td{
         width: 80%;
     }
 
-    .chartBox{
-        width: auto; /*Si no especificamos el ancho se va al infinito*/
-        padding-top: 35%; /*Para qué se vea bien*/
+    .chartBox {
+        width: auto;
+        /*Si no especificamos el ancho se va al infinito*/
+        padding-top: 35%;
+        /*Para qué se vea bien*/
     }
-    
-    #datosGraficos{ /*En media query cambiar esto*/
+
+    #datosGraficos {
+        /*En media query cambiar esto*/
         width: 300px;
     }
-    
-    #datosNumericos{
+
+    #datosNumericos {
         width: 300px;
         margin-bottom: 50px;
     }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait){
-    #finanzas{
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    #finanzas {
         display: flex;
         flex-direction: column;
         padding-left: 15%;
     }
 }
 
-@media (min-width: 1025px){
-    #finanzas{
-        position: fixed; 
+@media (min-width: 1025px) {
+    #finanzas {
+        position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -207,21 +244,22 @@ td{
         justify-content: space-around;
         width: 80%;
     }
-    
 
-    .chartBox{
-        width: auto; /*Si no especificamos el ancho se va al infinito*/
-        padding-top: 7%; /*Para qué se vea bien*/
+
+    .chartBox {
+        width: auto;
+        /*Si no especificamos el ancho se va al infinito*/
+        padding-top: 7%;
+        /*Para qué se vea bien*/
     }
-    
-    #datosGraficos{ /*En media query cambiar esto*/
+
+    #datosGraficos {
+        /*En media query cambiar esto*/
         width: 500px;
     }
-    
-    #datosNumericos{
+
+    #datosNumericos {
         width: 500px;
         margin-bottom: 50px;
     }
 }
-
-
