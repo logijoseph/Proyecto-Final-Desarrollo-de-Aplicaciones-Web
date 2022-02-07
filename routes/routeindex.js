@@ -78,6 +78,27 @@ router.get("/register", async(req,res)=>{
 
 })
 
+/* FINANZAS */
+router.get("/finanzas", verify, async (req, res) => {  
+  let flujos = await IngresoEgreso.find({userId: req.userId});
+
+  res.render("finanzas", {flujos});
+})
+
+router.post('/addFinanzas', verify, async (req, res) => {
+  console.log("Add Finanzas");
+
+  if(req.body.cantidad == '') return;
+
+  let ingresoEgreso = new IngresoEgreso(req.body);
+
+  ingresoEgreso.userId = req.userId;
+  ingresoEgreso.fecha = Date.now();
+
+  await ingresoEgreso.save();
+  res.redirect("/finanzas");
+});
+
 router.get("/diario", verify, async (req, res) => {
   let tareas = await TareasDiarias.find({ userId: req.userId })
   res.render("diario", { tareas })
@@ -97,28 +118,6 @@ router.get("/anual", verify, async (req, res) => {
   let tareas = await TareasAnuales.find({ userId: req.userId })
   res.render("anual", { tareas })
 })
-
-router.get("/finanzas", verify, async (req, res) => {
-  
-  let flujos = await IngresoEgreso.find({userId: req.userId});
-  console.log(flujos);
-  res.render("finanzas", {flujos});
-})
-
-router.post('/addFinanzas', verify, async (req, res) => {
-  console.log("Add Finanzas");
-  console.log(req.body)
-
-  if(req.body.cantidad == '') return;
-
-  let ingresoEgreso = new IngresoEgreso(req.body);
-
-  ingresoEgreso.userId = req.userId;
-  ingresoEgreso.fecha = Date.now();
-
-  await ingresoEgreso.save();
-  res.redirect("/finanzas");
-});
 
 
 //Diario
