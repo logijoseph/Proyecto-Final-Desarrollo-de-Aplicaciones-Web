@@ -9,17 +9,18 @@ let verify = require('../middleware/verifyAcces')
 let bcrypt = require("bcrypt")
 let jwt = require("jsonwebtoken")
 let flash = require("connect-flash")
-
 const IngresoEgreso = require('../model/ingresoegreso');
 
-router.get("/", verify, async (req, res) => {
-  //console.log(req.userId)
-  res.render("index")
+
+router.get("/",verify,async (req,res)=>{
+    //console.log(req.userId)
+    let tareas = await TareasDiarias.find({userId:req.userId})
+    res.render("diario", {tareas})
 })
 
-router.get("/login", async (req, res) => {
-  res.render("login")
-})
+router.get("/login", async(req,res)=>{
+  res.render('index', {messages: req.flash('info')})
+
 
 router.post("/login", async (req, res) => {
   let email = req.body.email
@@ -27,8 +28,10 @@ router.post("/login", async (req, res) => {
 
   let user = await User.findOne({ email: email }) //Va a buscar si existe el usuario, si existe lo va a guardar, si no, guardará nulo
   //console.log(user)
-  if (!user) {
-    res.redirect('login')
+
+  if(!user){
+    req.flash('info', 'El usuario o la contraseña son incorrectos')
+    res.redirect('/login')
   }
   else {
     //Aquí checaremos si la contraseña es correcta
@@ -41,8 +44,10 @@ router.post("/login", async (req, res) => {
       res.cookie("token", token, { httpOnly: true })
       res.redirect('/')
     }
-    else {
-      res.redirect('login')
+
+    else{
+      req.flash('info', 'El usuario o la contraseña son incorrectos')
+      res.redirect('/login')
     }
   }
 })
@@ -53,7 +58,10 @@ router.post("/register", async (req, res) => {
   let exists = await User.findOne({ email: user.email })
 
   //console.log(exists)
-  if (exists) {
+
+  if(exists){
+    req.flash('info', 'El usuario ya existe')
+
     res.redirect("/register")
   }
   else {
@@ -64,8 +72,10 @@ router.post("/register", async (req, res) => {
   }
 })
 
-router.get("/register", async (req, res) => {
-  res.render("register")
+
+router.get("/register", async(req,res)=>{
+  res.render('register', {messages: req.flash('info')})
+
 })
 
 router.get("/diario", verify, async (req, res) => {
@@ -112,33 +122,33 @@ router.post('/addFinanzas', verify, async (req, res) => {
 
 
 //Diario
-router.get("/addDiario", verify, async (req, res) => {
-  res.render("addDiario")
-})
-router.post('/addDiario', verify, async (req, res) => {
-  console.log("Porqueeeeeeeeeeeee")
-  let post = new TareasDiarias(req.body)
-  post.userId = req.userId //Le agrego el usuario que publicó el post
-  await post.save()
-  res.redirect("/diario");
-});
-router.get('/deletediario/:id', verify, async (req, res) => {
 
-  let id = req.params.id
-  await TareasDiarias.remove({ _id: id })
-  res.redirect('/diario')
+router.get("/addDiario", verify, async (req,res)=>{
+    res.render("addDiario")
 })
-router.get('/editdiario/:id', verify, async (req, res) => {
+router.post('/addDiario', verify, async (req,res) =>{
+    console.log("Porqueeeeeeeeeeeee")
+    let post = new TareasDiarias(req.body)
+    post.userId = req.userId //Le agrego el usuario que publicó el post
+    await post.save()
+    res.redirect("/diario");
+  });
+  router.get('/deletediario/:id',  verify, async (req,res) =>{
+    let id = req.params.id
+    await TareasDiarias.remove({_id:id})
+    res.redirect('/diario')
+  })
+  router.get('/editdiario/:id',  verify, async(req,res) =>{
+    let id = req.params.id
+    let task  = await TareasDiarias.findById(id)
+    res.render('editDiario',{task})
+  
+  })
+  router.post('/editdiario/:id',  verify, async(req,res) =>{
+    await TareasDiarias.updateOne({_id:req.params.id},req.body)
+    res.redirect('/diario')
+      })
 
-  let id = req.params.id
-  let task = await TareasDiarias.findById(id)
-  res.render('editDiario', { task })
-
-})
-router.post('/editdiario/:id', verify, async (req, res) => {
-  await TareasDiarias.updateOne({ _id: req.params.id }, req.body)
-  res.redirect('/diario')
-})
 //Semanal
 router.get("/addsemanal", verify, async (req, res) => {
   res.render("addsemanal")
@@ -197,30 +207,37 @@ router.post('/editmensual/:id', verify, async (req, res) => {
   res.redirect('/mensual')
 })
 //Anual
-router.get("/addanual", verify, async (req, res) => {
-  res.render("addanual")
-})
-router.post('/addanual', verify, async (req, res) => {
-  let post = new TareasAnuales(req.body)
-  post.userId = req.userId //Le agrego el usuario que publicó el post
-  await post.save()
-  res.redirect("/anual");
-});
-router.get('/deleteanual/:id', verify, async (req, res) => {
 
-  let id = req.params.id
-  await TareasAnuales.remove({ _id: id })
-  res.redirect('/anual')
+router.get("/addanual", verify, async (req,res)=>{
+    res.render("addanual")
 })
-router.get('/editanual/:id', verify, async (req, res) => {
+router.post('/addanual', verify, async (req,res) =>{
+    let post = new TareasAnuales(req.body)
+    post.userId = req.userId //Le agrego el usuario que publicó el post
+    await post.save()
+    res.redirect("/anual");
+  });
+  router.get('/deleteanual/:id', verify, async (req,res) =>{
 
-  let id = req.params.id
-  let task = await TareasAnuales.findById(id)
-  res.render('editanual', { task })
+    let id = req.params.id
+    await TareasAnuales.remove({_id:id})
+    res.redirect('/anual')
+  })
+  router.get('/editanual/:id', verify,   async(req,res) =>{
 
-})
-router.post('/editanual/:id', verify, async (req, res) => {
-  await TareasAnuales.updateOne({ _id: req.params.id }, req.body)
-  res.redirect('/anual')
-})
+    let id = req.params.id
+    let task  = await TareasAnuales.findById(id)
+    res.render('editanual',{task})
+  
+  })
+  router.post('/editanual/:id', verify,  async(req,res) =>{
+    await TareasAnuales.updateOne({_id:req.params.id},req.body)
+    res.redirect('/anual')
+      })
+
+  router.get("/logoff", verify, async(req,res)=>{
+    res.clearCookie("token") //Para eliminar el token
+    res.redirect("/")
+  })
+
 module.exports = router;
